@@ -1,0 +1,28 @@
+application:
+  name: openfga
+  pods:
+  - name: app
+    image: openfga/openfga:latest
+    path: /
+    servicePorts:
+    - 8080
+    vars:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: "postgres://openfga:openfga@postgres.pod:5432/openfga?sslmode=disable"
+      OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
+    volumes:
+    - name: openfga-data
+      mountPath: /data
+      size: 2Gi
+  - name: postgres
+    image: postgres:16-alpine
+    servicePorts:
+    - 5432
+    vars:
+      POSTGRES_DB: openfga
+      POSTGRES_USER: openfga
+      POSTGRES_PASSWORD: openfga
+    volumes:
+    - name: openfga-db
+      mountPath: /var/lib/postgresql/data
+      size: 5Gi
