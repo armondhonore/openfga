@@ -2,11 +2,13 @@ application:
   name: openfga
   pods:
   - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
-    path: /healthz
+    image: ghcr.io/openfga/openfga:latest
+    path: /playground
     servicePorts:
     - 8080
     vars:
+      OPENFGA_PLAYGROUND_ENABLED: "true"
       OPENFGA_DATASTORE_ENGINE: memory
       OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
       OPENFGA_GRPC_ADDR: "0.0.0.0:8081"
+      OPENFGA_LOG_FORMAT: text
