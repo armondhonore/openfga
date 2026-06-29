@@ -1,16 +1,12 @@
 # Nexlayer deploy image: wrap the official OpenFGA binary so the container's
-# DEFAULT command starts the HTTP/gRPC server (`run`). The upstream image's
-# entrypoint is `/openfga` with no subcommand, which only prints help and exits.
+# DEFAULT command starts the HTTP/gRPC server (`run`). The upstream entrypoint
+# is `/openfga` with no subcommand, which only prints help and exits (which is
+# why a deploy-only of the raw image returns "connection refused" on :8080).
 FROM mirror.gcr.io/openfga/openfga:latest
 
 EXPOSE 8080
 EXPOSE 8081
 EXPOSE 3000
-
-# Drop the inherited gRPC HEALTHCHECK; the platform readiness probe uses the
-# HTTP service port instead, and the grpc-health-probe check can wedge the pod
-# as NotReady during startup.
-HEALTHCHECK NONE
 
 ENTRYPOINT ["/openfga"]
 CMD ["run"]
