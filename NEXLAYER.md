@@ -2,14 +2,14 @@
 
 **Live:** [https://relaxed-weasel-openfga.cloud.nexlayer.ai](https://relaxed-weasel-openfga.cloud.nexlayer.ai)  
 
-**Runtime:**  · **Port:** auto-detected · **Deploy branch:** main
+**Runtime:**  · **Port:** auto-detected · **Deploy branch:** nexlayer
 
 ---
 
 ## How this deployment works
 
 **openfga** is deployed on [Nexlayer](https://nexlayer.ai) — a container-native
-platform where every push to `main` triggers a fully automated build-and-deploy
+platform where every push to `nexlayer` triggers a fully automated build-and-deploy
 pipeline with no infrastructure management required:
 
 1. **AI analysis** — the Nexlayer agent reads your repo, understands your runtime,
@@ -39,30 +39,14 @@ application:
   name: openfga
   pods:
   - name: app
-    image: mirror.gcr.io/openfga/openfga:latest
-    path: /
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:latest"
+    path: /healthz
     servicePorts:
     - 8080
     vars:
-      OPENFGA_DATASTORE_ENGINE: postgres
-      OPENFGA_DATASTORE_URI: "postgres://openfga:${POSTGRES_PASSWORD}@postgres.pod:5432/openfga?sslmode=disable"
+      OPENFGA_DATASTORE_ENGINE: memory
       OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
-    volumes:
-    - name: openfga-data
-      mountPath: /data
-      size: 2Gi
-  - name: postgres
-    image: mirror.gcr.io/library/postgres:16-alpine
-    servicePorts:
-    - 5432
-    vars:
-      POSTGRES_DB: openfga
-      POSTGRES_USER: openfga
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    volumes:
-    - name: openfga-db
-      mountPath: /var/lib/postgresql/data
-      size: 5Gi
+      OPENFGA_GRPC_ADDR: "0.0.0.0:8081"
 ```
 
 **Common edits:**
@@ -84,7 +68,7 @@ only regenerates it if you delete it or on the very first deploy.
 ### `.github/workflows/nexlayer.yml` — CI/CD
 
 Triggers on:
-- **Push** to `main` → production redeploy
+- **Push** to `nexlayer` → production redeploy
 - **Pull request** → preview deploy with a unique URL posted as a PR comment
 - **Manual** → run on demand from the Actions tab (no commit required)
 
@@ -101,7 +85,7 @@ include this context in your prompt:
 > *"This project is deployed on Nexlayer. The deployment manifest is `nexlayer.yaml`.
 > The container exposes port auto-detected. When adding a new service (database, cache,
 > worker), add it as a new pod in `nexlayer.yaml` and reference it with
-> `<podName>.pod:<port>` syntax. CI/CD runs on push to `main`."*
+> `<podName>.pod:<port>` syntax. CI/CD runs on push to `nexlayer`."*
 
 The `nexlayer.skills` file in this repo gives agents structured guidance on the
 Nexlayer platform, including schema reference, common patterns, and anti-patterns.
