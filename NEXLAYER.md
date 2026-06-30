@@ -15,7 +15,7 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-OpenFGA is an open-source Fine-Grained Authorization (FGA) system based on the Zanzibar whitepaper, providing a scalable way to manage and check relationship-based access control (ReBAC).
+OpenFGA is an open-source Fine-Grained Authorization (FGA) system based on the Zanzibar model, providing a scalable way to manage complex relationship-based access control (ReBAC).
 <!-- nexlayer:end -->
 
 ## Technology Stack
@@ -24,25 +24,22 @@ OpenFGA is an open-source Fine-Grained Authorization (FGA) system based on the Z
 |------|------|---------|---------------|
 | Go | language | 1.25.7 | go.mod |
 | PostgreSQL | database | latest | go.mod |
-| gRPC | infra | latest | go.mod |
 | MySQL | database | latest | go.mod |
-| Docker | infra | latest | Dockerfile |
+| gRPC | infra | latest | go.mod |
+| Prometheus | infra | latest | go.mod |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- cmd/ — Entry points for the OpenFGA binary
-- internal/ — Private implementation details and core logic
-- pkg/ — Public libraries and shared packages
-- telemetry/ — Observability and tracing implementations
-- tests/ — Integration and unit tests
+- go.mod — Go module definitions and dependency management
+- Dockerfile — Container specification for the OpenFGA server
 <!-- nexlayer:end -->
 
 ## External Services Required
 <!-- nexlayer:section agent-managed=external_deps -->
 Services that must be configured separately (not deployed by Nexlayer):
 
-- PostgreSQL or MySQL (Required for persistence)
+- PostgreSQL or MySQL database for storage
 <!-- nexlayer:end -->
 
 ## Local Development Setup
@@ -86,7 +83,7 @@ application:
   name: openfga
   pods:
   - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:latest"
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
     path: /healthz
     servicePorts:
     - 8080
@@ -95,7 +92,6 @@ application:
       OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
       OPENFGA_GRPC_ADDR: "0.0.0.0:8081"
 ```
-
 <!-- nexlayer:end -->
 
 ## Nexlayer Deployment Plan
@@ -122,7 +118,7 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-06-29T21:12:35Z  
+**Last deployed:** 2026-06-30T00:54:46Z  
 **Live URL:** https://relaxed-weasel-openfga.cloud.nexlayer.ai  
 **Runtime:**  · **Port:** auto-detected  
 **Deploy branch:** nexlayer  
@@ -132,7 +128,7 @@ application:
   name: openfga
   pods:
   - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:latest"
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
     path: /healthz
     servicePorts:
     - 8080
@@ -147,6 +143,7 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-06-29T21:12:03Z | analyzed | initial repo analysis |
-| 2026-06-29T21:12:35Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
+| 2026-06-30T00:54:15Z | analyzed | initial repo analysis |
+| 2026-06-30T00:54:46Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
