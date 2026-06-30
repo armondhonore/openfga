@@ -15,7 +15,7 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-OpenFGA is an open-source Fine-Grained Authorization (FGA) system based on the Zanzibar model, providing a scalable way to manage complex relationship-based access control (ReBAC).
+OpenFGA is an open-source Fine-Grained Authorization (FGA) service based on the Zanzibar model, providing a scalable way to manage and check relationships and permissions.
 <!-- nexlayer:end -->
 
 ## Technology Stack
@@ -24,22 +24,22 @@ OpenFGA is an open-source Fine-Grained Authorization (FGA) system based on the Z
 |------|------|---------|---------------|
 | Go | language | 1.25.7 | go.mod |
 | PostgreSQL | database | latest | go.mod |
-| MySQL | database | latest | go.mod |
-| gRPC | infra | latest | go.mod |
-| Prometheus | infra | latest | go.mod |
+| gRPC | infra | v2 | go.mod |
+| Prometheus | tool | latest | go.mod |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- go.mod — Go module definitions and dependency management
-- Dockerfile — Container specification for the OpenFGA server
+- Dockerfile — Container definition for the Nexlayer deploy image
+- go.mod — Go module dependencies and toolchain specifications
 <!-- nexlayer:end -->
 
 ## External Services Required
 <!-- nexlayer:section agent-managed=external_deps -->
 Services that must be configured separately (not deployed by Nexlayer):
 
-- PostgreSQL or MySQL database for storage
+- PostgreSQL Database
+- OpenTelemetry Collector (optional for tracing)
 <!-- nexlayer:end -->
 
 ## Local Development Setup
@@ -118,7 +118,7 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-06-30T00:54:46Z  
+**Last deployed:** 2026-06-30T01:03:15Z  
 **Live URL:** https://relaxed-weasel-openfga.cloud.nexlayer.ai  
 **Runtime:**  · **Port:** auto-detected  
 **Deploy branch:** nexlayer  
@@ -143,7 +143,8 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-06-30T00:54:15Z | analyzed | initial repo analysis |
-| 2026-06-30T00:54:46Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
+| 2026-06-30T01:02:49Z | analyzed | initial repo analysis |
+| 2026-06-30T01:03:15Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
 
