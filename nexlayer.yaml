@@ -1,8 +1,8 @@
 application:
   name: openfga
   pods:
-  - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
+  - name: openfga
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f160c8a03"
     path: /healthz
     servicePorts:
     - 8080

@@ -18,20 +18,20 @@ application:
   name: openfga
   pods:
   - name: openfga
-    image: "# filled by pipeline"
-    path: /playground
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f160c8a03"
+    path: /healthz
     servicePorts:
-    - 3000
+    - 8080
     vars:
       OPENFGA_DATASTORE_ENGINE: memory
       OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
       OPENFGA_GRPC_ADDR: "0.0.0.0:8081"
-      OPENFGA_LOG_FORMAT: text
 ```
 
 Pinned facts:
 - The Nexlayer `command:` yaml field does NOT survive the deploy path — bake startup into the image CMD.
 - Playground is enabled via `--playground-enabled` CLI flag (env var OPENFGA_PLAYGROUND_ENABLED ignored).
-- Playground runs on port 3000; API on 8080; gRPC on 8081.
-- Route/health path: /playground (port 3000, returns HTML with 200).
+- Pinned image: registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f160c8a03
+- Route/health path: /healthz (port 8080, returns {"status":"SERVING"}).
 - Datastore: in-memory — no external DB needed.
+- Screenshot path: /healthz shows JSON status proving service is live.
