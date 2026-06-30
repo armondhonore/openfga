@@ -1,9 +1,10 @@
 application:
   name: openfga
   pods:
-  - name: app
+  - name: openfga
     image: ghcr.io/openfga/openfga:latest
-    path: /playground
+    command: run
+    path: /healthz
     servicePorts:
     - 8080
     vars:
