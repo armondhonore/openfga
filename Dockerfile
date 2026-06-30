@@ -9,4 +9,4 @@ EXPOSE 8081
 EXPOSE 3000
 
 ENTRYPOINT ["/openfga"]
-CMD ["run"]
+CMD ["run", "--playground-enabled"]

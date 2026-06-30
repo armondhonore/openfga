@@ -2,14 +2,11 @@ application:
   name: openfga
   pods:
   - name: openfga
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
-    command: run
+    image: "# filled by pipeline"
     path: /playground
     servicePorts:
     - 3000
     vars:
-      OPENFGA_PLAYGROUND_ENABLED: "true"
-      OPENFGA_PLAYGROUND_PORT: "3000"
       OPENFGA_DATASTORE_ENGINE: memory
       OPENFGA_HTTP_ADDR: "0.0.0.0:8080"
       OPENFGA_GRPC_ADDR: "0.0.0.0:8081"
