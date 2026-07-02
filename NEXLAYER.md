@@ -15,31 +15,32 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-OpenFGA is an open-source Fine-Grained Authorization (FGA) service based on the Zanzibar model, providing a scalable way to manage and check relationships and permissions.
+OpenFGA is an open-source implementation of the Fine-Grained Authorization (FGA) model, providing a scalable relationship-based access control (ReBAC) system based on Google's Zanzibar whitepaper.
 <!-- nexlayer:end -->
 
 ## Technology Stack
 <!-- nexlayer:section agent-managed=tech_stack -->
 | Name | Kind | Version | Detected From |
 |------|------|---------|---------------|
-| Go | language | 1.25.7 | go.mod |
-| PostgreSQL | database | latest | go.mod |
-| gRPC | infra | v2 | go.mod |
-| Prometheus | tool | latest | go.mod |
+| Go | language | latest | go.mod |
+| PostgreSQL | database | latest | docker-compose.yaml |
+| gRPC | infra | latest | Dockerfile |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- Dockerfile — Container definition for the Nexlayer deploy image
-- go.mod — Go module dependencies and toolchain specifications
+- cmd/ — Entry points for the OpenFGA server and CLI
+- internal/ — Private application logic and core implementation
+- pkg/ — Publicly exportable libraries and API definitions
+- telemetry/ — Observability and monitoring instrumentation
+- tests/ — Integration and unit tests
 <!-- nexlayer:end -->
 
 ## External Services Required
 <!-- nexlayer:section agent-managed=external_deps -->
 Services that must be configured separately (not deployed by Nexlayer):
 
-- PostgreSQL Database
-- OpenTelemetry Collector (optional for tracing)
+- PostgreSQL (Persistence layer)
 <!-- nexlayer:end -->
 
 ## Local Development Setup
@@ -72,9 +73,9 @@ FGA_STORE_CONNECTION_URL=postgresql://user:pass@localhost:5432/fga?sslmode=disab
 
 | Pod | Variable | Value | Kind |
 |-----|----------|-------|------|
-| `app` | `OPENFGA_DATASTORE_ENGINE` | `memory` | plain |
-| `app` | `OPENFGA_HTTP_ADDR` | `"0.0.0.0:8080"` | plain |
-| `app` | `OPENFGA_GRPC_ADDR` | `"0.0.0.0:8081"` | plain |
+| `openfga` | `OPENFGA_DATASTORE_ENGINE` | `memory` | plain |
+| `openfga` | `OPENFGA_HTTP_ADDR` | `"0.0.0.0:8080"` | plain |
+| `openfga` | `OPENFGA_GRPC_ADDR` | `"0.0.0.0:8081"` | plain |
 
 ### nexlayer.yaml
 
@@ -82,8 +83,8 @@ FGA_STORE_CONNECTION_URL=postgresql://user:pass@localhost:5432/fga?sslmode=disab
 application:
   name: openfga
   pods:
-  - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
+  - name: openfga
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f160c8a03"
     path: /healthz
     servicePorts:
     - 8080
@@ -118,7 +119,7 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-06-30T01:03:15Z  
+**Last deployed:** 2026-07-02T05:22:31Z  
 **Live URL:** https://relaxed-weasel-openfga.cloud.nexlayer.ai  
 **Runtime:**  · **Port:** auto-detected  
 **Deploy branch:** nexlayer  
@@ -127,8 +128,8 @@ application:
 application:
   name: openfga
   pods:
-  - name: app
-    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f153935da"
+  - name: openfga
+    image: "registry.nexlayer.io/user_01kece1xyh817dwff7wnarhkxd/openfga:19f160c8a03"
     path: /healthz
     servicePorts:
     - 8080
@@ -143,8 +144,9 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-06-30T01:02:49Z | analyzed | initial repo analysis |
-| 2026-06-30T01:03:15Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
+| 2026-07-02T05:21:47Z | analyzed | initial repo analysis |
+| 2026-07-02T05:22:31Z | success | deployed https://relaxed-weasel-openfga.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
 
 
